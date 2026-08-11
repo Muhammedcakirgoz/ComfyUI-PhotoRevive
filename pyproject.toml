@@ -1,0 +1,13 @@
+[project]
+name = "comfyui-photorevive"
+description = "One-click old photo restoration pipeline for ComfyUI (scratch repair, face restore, colorize, upscale)"
+version = "0.1.0"
+license = { text = "MIT" }
+
+[project.urls]
+Repository = "https://github.com/<kullanici-adi>/ComfyUI-PhotoRevive"
+
+[tool.comfy]
+PublisherId = "<kullanici-adi>"
+DisplayName = "ComfyUI-PhotoRevive"
+Icon = ""
