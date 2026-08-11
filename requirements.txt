@@ -6,3 +6,4 @@ Pillow
 basicsr
 facexlib
 gfpgan
+realesrgan
