@@ -52,6 +52,12 @@ MODELS = {
         "url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
         "sha256": None,
     },
+    "deoldify": {
+        "stage": "colorize_deoldify",
+        "filename": "models/ColorizeArtistic_gen.pth",
+        "url": "https://data.deepai.org/deoldify/ColorizeArtistic_gen.pth",
+        "sha256": None,
+    },
 }
 
 DEFAULT_MODELS_DIR = Path(__file__).resolve().parents[3] / "models"

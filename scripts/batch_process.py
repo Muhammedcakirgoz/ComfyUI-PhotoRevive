@@ -68,8 +68,11 @@ def process_one(image_tensor: torch.Tensor, checkpoints: dict, args) -> torch.Te
         image,
         preset,
         upscale_factor=args.upscale_factor,
+        colorizer=args.colorizer,
         ddcolor_model_path=checkpoints["ddcolor"],
         esrgan_model_path=checkpoints["realesrgan"],
+        deoldify_weights_dir=checkpoints["deoldify_dir"],
+        deoldify_render_factor=args.deoldify_render_factor,
     )
     return image
 
@@ -83,6 +86,14 @@ def main():
     parser.add_argument("--face-strength", type=float, default=0.5)
     parser.add_argument("--mask-threshold", type=float, default=0.4)
     parser.add_argument(
+        "--colorizer",
+        choices=["ddcolor", "deoldify"],
+        default="ddcolor",
+        help="B&W fotoğraflar için renklendirme modeli (deoldify daha gerçekçi ama daha yavaş, "
+        "'deoldify'/'fastai' paketlerini gerektirir)",
+    )
+    parser.add_argument("--deoldify-render-factor", type=int, default=35, help="DeOldify render_factor (7-45)")
+    parser.add_argument(
         "--quality-check",
         action="store_true",
         help="Her fotoğraf için öncesi/sonrası karşılaştırma görseli + rapor (.txt) de üret",
@@ -95,6 +106,7 @@ def main():
         "gfpgan": str(models_dir / "photorevive" / "face_restore" / "GFPGANv1.4.pth"),
         "ddcolor": str(models_dir / "photorevive" / "colorize_upscale" / "ddcolor_paper.pth"),
         "realesrgan": str(models_dir / "photorevive" / "colorize_upscale" / "RealESRGAN_x4plus.pth"),
+        "deoldify_dir": str(models_dir / "photorevive" / "colorize_deoldify"),
     }
 
     if not args.input.is_dir():

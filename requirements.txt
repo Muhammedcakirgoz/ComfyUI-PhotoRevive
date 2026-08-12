@@ -7,3 +7,8 @@ basicsr
 facexlib
 gfpgan
 realesrgan
+
+# Optional: only needed for PhotoRevive_ColorizeUpscale's colorizer="deoldify"
+# backend (better colors on heavily degraded photos, slower than DDColor).
+fastai==1.0.61
+deoldify

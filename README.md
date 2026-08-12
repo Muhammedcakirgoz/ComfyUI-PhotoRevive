@@ -16,8 +16,14 @@ workflow ile onarıp renklendiren ComfyUI custom node paketi.
 3. **Yüz restorasyonu** (`PhotoRevive_FaceRestore`) — GFPGAN, ayarlanabilir
    düşük-orta şiddette (kimlik/yaş/ifade sapmasını sınırlamak için).
 4. **Renklendirme + upscale** (`PhotoRevive_ColorizeUpscale`) — Sadece
-   siyah-beyaz fotoğraflarda DDColor ile renklendirme, ardından Real-ESRGAN
-   tiled upscale (hasar temizlenmeden büyütülmez).
+   siyah-beyaz fotoğraflarda renklendirme, ardından Real-ESRGAN tiled
+   upscale (hasar temizlenmeden büyütülmez). İki renklendirme motoru
+   arasından seçilebilir (`colorizer` girdisi):
+   - `ddcolor` (varsayılan) — hızlı, vendored, ek bağımlılık gerektirmez.
+   - `deoldify` — fastai tabanlı GAN, ağır dokulu/lekeli eski fotoğraflarda
+     belirgin şekilde daha gerçekçi/canlı renkler verir ama daha yavaştır
+     ve `fastai`/`deoldify` paketlerini gerektirir (`deoldify_render_factor`
+     ile detay/hız dengesi ayarlanır, 7-45 arası, varsayılan 35).
 5. **Kalite kontrolü** (`PhotoRevive_QualityCheck`) — Öncesi/sonrası
    görüntüleri karşılaştırır; ArcFace tabanlı yüz kimliği benzerliği ve
    histogram/kenar korelasyonuna dayalı arka plan/kıyafet benzerliği
@@ -41,6 +47,12 @@ Model ağırlıkları `ComfyUI/models/photorevive/<aşama>/` altına iner
 (~3.3GB toplam: BOPBTL, GFPGAN, CodeFormer, DDColor, Real-ESRGAN). Tek bir
 modeli indirmek için: `python scripts/download_models.py --only gfpgan`.
 Tüm modelleri listelemek için: `python scripts/download_models.py --list`.
+
+`deoldify` renklendirme motoru isteğe bağlıdır; `requirements.txt`'teki
+`fastai`/`deoldify` paketleri ve ~243MB'lık `ColorizeArtistic_gen.pth`
+ağırlığı (`python scripts/download_models.py --only deoldify`) sadece
+`colorizer="deoldify"` seçildiğinde kullanılır, kurulmazsa `ddcolor`
+motoru etkilenmeden çalışmaya devam eder.
 
 ## Kullanım
 
